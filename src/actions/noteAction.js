@@ -16,3 +16,9 @@ export const noteRevise = (value, id) => ({
   value,
   id,
 });
+
+export const LOAD_MORE_NOTE_VALUE = 'LOAD_MORE_NOTE_VALUE';
+export const noteLoadMore = () => ({
+
+})
+;

@@ -1,6 +1,11 @@
 import { ADD_NOTE_VALUE, REMOVE_NOTE_VALUE, REVISE_NOTE_VALUE } from '../actions/noteAction';
 
-const initialState = [];
+const initialState = {
+  initLoading: true,
+  loading: false,
+  data: [],
+  list: [],
+};
 
 export default (state = initialState, action) => {
   switch (action.type) {
