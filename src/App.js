@@ -1,80 +1,87 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import StarIcon from '@material-ui/icons/Star';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+import IconButton from '@material-ui/core/IconButton';
+import TextField from '@material-ui/core/TextField';
 import {
-  List, Avatar, Button, Skeleton,
-} from 'antd';
+  noteAdd, noteAddTrack, noteRemove, noteRevise,
+} from './actions/noteAction';
 
-import reqwest from 'reqwest';
+const styles = theme => ({
+  noteContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  root: {
+    width: '70%',
+    backgroundColor: theme.palette.background.paper,
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: '90%',
+  },
+});
 
-const count = 3;
-const fakeDataUrl = `https://randomuser.me/api/?results=${count}&inc=name,gender,email,nat&noinfo`;
+const editNote = (e) => {
+  console.log('Edit');
+};
 
-class App extends React.Component {
-  state = {
-    initLoading: true,
-    loading: false,
-    data: [],
-    list: [],
-  }
+const InsetList = (props) => {
+  const { classes, noteReducer, onNoteAddTrack, onNoteAdd} = props;
+  return (
+    <div className={classes.noteContainer}>
+      <List component="nav" className={classes.root}>
+        <TextField
+          id="standard-name"
+          label="Name"
+          className={classes.textField}
+          value={noteReducer.noteTmp}
+          onChange={e => onNoteAddTrack(e.target.value)}
+          margin="normal"
+        />
+        <IconButton onClick={onNoteAdd}>
+          <EditIcon />
+        </IconButton>
+        <ListItem button>
+          <ListItemIcon>
+            <StarIcon />
+          </ListItemIcon>
+          <ListItemText inset primary="Chelsea Otakan" />
+          <IconButton>
+            <DeleteIcon />
+          </IconButton>
+        </ListItem>
+        <ListItem button onClick={() => console.log('hohohoho')}>
+          <ListItemIcon>
+            <StarIcon />
+          </ListItemIcon>
+          <ListItemText inset primary="Eric Hoffman" />
+          <IconButton onClick={editNote}>
+            <DeleteIcon />
+          </IconButton>
+        </ListItem>
+      </List>
+    </div>
+  );
+};
 
-  componentDidMount() {
-// fetch data through redux (thunk)
-  }
+const mapStateToProps = state => ({
+  noteReducer: state.noteReducer,
+});
 
-  onLoadMore = () => {
-    this.setState({
-      loading: true,
-      list: this.state.data.concat([...new Array(count)].map(() => ({ loading: true, name: {} }))),
-    });
-    this.getData((res) => {
-      const data = this.state.data.concat(res.results);
-      this.setState({
-        data,
-        list: data,
-        loading: false,
-      }, () => {
-        // Resetting window's offsetTop so as to display react-virtualized demo underfloor.
-        // In real scene, you can using public method of react-virtualized:
-        // https://stackoverflow.com/questions/46700726/how-to-use-public-method-updateposition-of-react-virtualized
-        window.dispatchEvent(new Event('resize'));
-      });
-    });
-  }
+const mapDispatchToProps = dispatch => ({
+  onNoteAdd: () => dispatch(noteAdd()),
+  onNoteAddTrack: value => dispatch(noteAddTrack(value)),
+  onNoteRemove: () => dispatch(noteRemove()),
+  onNoteRevise: () => dispatch(noteRevise()),
+});
 
-  render() {
-    const { initLoading, loading, list } = this.state;
-    const loadMore = !initLoading && !loading ? (
-      <div style={{
-        textAlign: 'center', marginTop: 12, height: 32, lineHeight: '32px',
-      }}
-      >
-        <Button onClick={this.onLoadMore}>loading more</Button>
-      </div>
-    ) : null;
-
-    return (
-      <List
-        className="demo-loadmore-list"
-        loading={initLoading}
-        itemLayout="horizontal"
-        loadMore={loadMore}
-        dataSource={list}
-        renderItem={item => (
-          <List.Item actions={[<a>edit</a>, <a>more</a>]}>
-            <Skeleton avatar title={false} loading={item.loading} active>
-              <List.Item.Meta
-                avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                title={<a href="https://ant.design">{item.name.last}</a>}
-                description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-              />
-              <div>content</div>
-            </Skeleton>
-          </List.Item>
-        )}
-      />
-    );
-  }
-}
-
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(InsetList));

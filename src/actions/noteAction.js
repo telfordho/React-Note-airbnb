@@ -1,7 +1,12 @@
-export const ADD_NOTE_VALUE = 'ADD_NOTE_VALUE';
-export const noteAdd = value => ({
-  type: 'ADD_NOTE_VALUE',
+export const TRACK_ADD_NOTE = 'TRACK_ADD_NOTE';
+export const noteAddTrack = value => ({
+  type: 'TRACK_ADD_NOTE',
   value,
+});
+
+export const ADD_NOTE_VALUE = 'ADD_NOTE_VALUE';
+export const noteAdd = () => ({
+  type: 'ADD_NOTE_VALUE',
 });
 
 export const REMOVE_NOTE_VALUE = 'REMOVE_NOTE_VALUE';
