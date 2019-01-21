@@ -10,20 +10,34 @@ export const noteAdd = () => ({
 });
 
 export const REMOVE_NOTE_VALUE = 'REMOVE_NOTE_VALUE';
-export const noteRemove = id => ({
+export const noteRemove = (value, id) => ({
   type: 'REMOVE_NOTE_VALUE',
-  id,
-});
-
-export const REVISE_NOTE_VALUE = 'REVISE_NOTE_VALUE';
-export const noteRevise = (value, id) => ({
-  type: 'REVISE_NOTE_VALUE',
   value,
   id,
 });
 
-export const LOAD_MORE_NOTE_VALUE = 'LOAD_MORE_NOTE_VALUE';
-export const noteLoadMore = () => ({
+export const START_REVISE_NOTE = 'START_REVISE_NOTE';
+export const noteReviseStart = (value, id) => ({
+  type: 'START_REVISE_NOTE',
+  value,
+  id,
+});
 
-})
-;
+export const TRACK_REVISE_NOTE = 'TRACK_REVISE_NOTE';
+export const noteReviseTrack = (value, id) => ({
+  type: 'TRACK_REVISE_NOTE',
+  value,
+  id,
+});
+
+export const ACCEPT_REVISE_NOTE_VALUE = 'ACCEPT_REVISE_NOTE_VALUE';
+export const noteReviseAccept = id => ({
+  type: 'ACCEPT_REVISE_NOTE_VALUE',
+  id,
+});
+
+export const REJECT_REVISE_NOTE_VALUE = 'REJECT_REVISE_NOTE_VALUE';
+export const noteReviseReject = id => ({
+  type: 'REJECT_REVISE_NOTE_VALUE',
+  id,
+});
