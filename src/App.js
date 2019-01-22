@@ -27,6 +27,15 @@ const styles = theme => ({
     display: 'flex',
     justifyContent: 'center',
   },
+  editContainer: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  addNoteButton: {
+    padding: 0,
+    left: '30px',
+    height: '24px',
+  },
   root: {
     width: '70%',
     backgroundColor: theme.palette.background.paper,
@@ -54,22 +63,28 @@ const InsetList = (props) => {
   return (
     <div className={classes.noteContainer}>
       <List component="nav" className={classes.root}>
-        <TextField
-          label="Please insert here"
-          className={classes.textField}
-          value={noteReducer.noteTmp}
-          onChange={e => onNoteAddTrack(e.target.value)}
-          margin="normal"
-        />
-        <IconButton onClick={onNoteAdd}>
-          <EditIcon />
-        </IconButton>
 
+        <div className={classes.editContainer}>
+          <TextField
+            label="Please insert here"
+            className={classes.textField}
+            value={noteReducer.noteTmp}
+            onChange={e => onNoteAddTrack(e.target.value)}
+            margin="normal"
+          />
+          <IconButton className={classes.addNoteButton} onClick={onNoteAdd}>
+            <EditIcon />
+          </IconButton>
+        </div>
         {
           noteReducer.notes.map((note, id) => {
             if (note.status === 'viewing') {
               return (
-                <ListItem key={id.toString()} button onClick={() => onNoteStartRevise(note.value, id)}>
+                <ListItem
+                  key={id.toString()}
+                  button
+                  onClick={() => onNoteStartRevise(note.value, id)}
+                >
                   <ListItemIcon>
                     <StarIcon />
                   </ListItemIcon>
