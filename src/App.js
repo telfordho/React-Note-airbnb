@@ -38,10 +38,6 @@ const styles = theme => ({
   },
 });
 
-const editNote = (e) => {
-  console.log('Edit');
-};
-
 const InsetList = (props) => {
   const {
     classes,
@@ -73,7 +69,7 @@ const InsetList = (props) => {
           noteReducer.notes.map((note, id) => {
             if (note.status === 'viewing') {
               return (
-                <ListItem key={id} button onClick={() => onNoteStartRevise(note.value, id)}>
+                <ListItem key={id.toString()} button onClick={() => onNoteStartRevise(note.value, id)}>
                   <ListItemIcon>
                     <StarIcon />
                   </ListItemIcon>
@@ -85,7 +81,7 @@ const InsetList = (props) => {
               );
             }
             return (
-              <ListItem key={id}>
+              <ListItem key={id.toString()}>
                 <ListItemIcon>
                   <StarIcon />
                 </ListItemIcon>
@@ -96,10 +92,18 @@ const InsetList = (props) => {
                   onChange={e => onNoteReviseTrack(e.target.value, id)}
                   margin="normal"
                 />
-                <IconButton onClick={()=>onNoteReviseAccept(id)}>
+                <IconButton onClick={(e) => {
+                  onNoteReviseAccept(id);
+                  e.stopPropagation();
+                }}
+                >
                   <DoneIcon />
                 </IconButton>
-                <IconButton onClick={()=>onNoteReviseReject(id)}>
+                <IconButton onClick={(e) => {
+                  onNoteReviseReject(id);
+                  e.stopPropagation();
+                }}
+                >
                   <ClearIcon />
                 </IconButton>
               </ListItem>
@@ -121,8 +125,8 @@ const mapDispatchToProps = dispatch => ({
   onNoteRemove: (value, id) => dispatch(noteRemove(value, id)),
   onNoteStartRevise: (value, id) => dispatch(noteReviseStart(value, id)),
   onNoteReviseTrack: (value, id) => dispatch(noteReviseTrack(value, id)),
-  onNoteReviseAccept: (id) => dispatch(noteReviseAccept(id)),
-  onNoteReviseReject: (id) => dispatch(noteReviseReject(id)),
+  onNoteReviseAccept: id => dispatch(noteReviseAccept(id)),
+  onNoteReviseReject: id => dispatch(noteReviseReject(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(InsetList));

@@ -5,7 +5,7 @@ import {
   TRACK_REVISE_NOTE,
   START_REVISE_NOTE,
   ACCEPT_REVISE_NOTE_VALUE,
-  REJECT_REVISE_NOTE_VALUE
+  REJECT_REVISE_NOTE_VALUE,
 } from '../actions/noteAction';
 
 const initialState = {
