@@ -29,12 +29,11 @@ const styles = theme => ({
   },
   editContainer: {
     display: 'flex',
-    alignItems: 'center',
+    alignItems: 'flex-end',
   },
   addNoteButton: {
-    padding: 0,
-    left: '30px',
-    height: '24px',
+    padding: '10px',
+    left: '20px',
   },
   root: {
     width: '70%',
