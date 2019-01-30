@@ -61,8 +61,8 @@ const InsetList = (props) => {
 
   return (
     <div className={classes.noteContainer}>
-      <List component="nav" className={classes.root}>
 
+      <List component="nav" className={classes.root}>
         <div className={classes.editContainer}>
           <TextField
             label="Please insert here"
@@ -88,7 +88,11 @@ const InsetList = (props) => {
                     <StarIcon />
                   </ListItemIcon>
                   <ListItemText inset primary={note.value} />
-                  <IconButton onClick={() => onNoteRemove(note.value, id)}>
+                  <IconButton onClick={(e) => {
+                    onNoteRemove(note.value, id);
+                    e.stopPropagation();
+                  }}
+                  >
                     <DeleteIcon />
                   </IconButton>
                 </ListItem>
@@ -125,6 +129,7 @@ const InsetList = (props) => {
           })
         }
       </List>
+
     </div>
   );
 };
